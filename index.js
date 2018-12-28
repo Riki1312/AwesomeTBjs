@@ -7,7 +7,12 @@ var app = new Vue({
             data: [],
             mainx: [],
             mainy: [],
-            collectionName: "Collection"
+            collectionName: "Collection",
+            changes: {
+                update: [],
+                insert: [],
+                remove: []
+            }
         },
         mode: {
             edit: false,
@@ -54,6 +59,45 @@ var app = new Vue({
             vl_isArray: function(value) {
                 return Array.isArray(value);
             }
+        }
+    },
+    methods: {
+        edit_confirm: function() {
+            if (app.mode.debug) console.log("confirm");
+        },
+        edit_cancel: function() {
+            if (app.mode.debug) console.log("cancel");
+        },
+        line_delete: function(yline) {
+            if (app.mode.debug) console.log("delete y:" + yline);
+
+            app.mongodata.mainy.splice(app.mongodata.mainy.indexOf(yline), 1);
+            app.mongodata.data[yline] = {};
+
+            //history changes
+            app.mongodata.changes.remove.push({ dataindex: yline });
+        },
+        line_add: function(initial) {
+            if (app.mode.debug) console.log("add vl:" + initial);
+
+            let newLine = {};
+            app.mongodata.mainx.forEach((x) => {
+                newLine[x] = initial;
+            });
+
+            app.mongodata.data.push(newLine);
+            app.mongodata.mainy.push(app.mongodata.data.length - 1);
+
+            //history changes
+            app.mongodata.changes.insert.push({ dataindex: app.mongodata.data.length - 1 });
+        },
+        line_edit: function(yline, xline) {
+            if (app.mode.debug) console.log("edit y:" + yline + " x:" + xline);
+
+            //history changes
+            let infos = { dataindex: yline, propertyname: xline };
+            if (app.mongodata.changes.update.indexOf())
+            app.mongodata.changes.update.push();
         }
     }
 });
