@@ -92,12 +92,13 @@ var app = new Vue({
             app.mongodata.changes.insert.push({ dataindex: app.mongodata.data.length - 1 });
         },
         line_edit: function(yline, xline) {
-            if (app.mode.debug) console.log("edit y:" + yline + " x:" + xline);
-
             //history changes
             let infos = { dataindex: yline, propertyname: xline };
-            if (app.mongodata.changes.update.indexOf())
-            app.mongodata.changes.update.push();
+            if (!app.mongodata.changes.update.filter(x => x.dataindex == infos.dataindex && x.propertyname == infos.propertyname).length > 0)
+            {
+                app.mongodata.changes.update.push(infos);
+                if (app.mode.debug) console.log("edit y:" + yline + " x:" + xline);
+            }
         }
     }
 });
@@ -145,8 +146,12 @@ let PureData = [
 app.mongodata.data = PureData;
 app.mongodata.mainx = [ "DatoA", "DatoB", "DatoC" ];
 app.mongodata.mainy = Array.apply(null, { length: PureData.length }).map(Number.call, Number);
-app.mode.edit = true;
+//app.mode.edit = true;
 //app.mode.debug = true;
 app.ready = true;
+
+/*
+Quando si eseguono le query partire da insert poi update e infine delete
+*/
 
 //
