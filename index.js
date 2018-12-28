@@ -115,7 +115,7 @@ let PureData = [
     { DatoA: "Valore", DatoB: "Valore", DatoC: "Valore" },
     { DatoA: "Valore1", DatoC: "Valore3" },
     { DatoA: "Valore1", DatoC: "Valore3" },
-    { DatoA: [ "Valore01", "Valore01", "Valore01" ], DatoB: "Valore", DatoC: "Valore" },
+    { DatoA: [ "Valore01", "Valore02", "Valore03" ], DatoB: "Valore", DatoC: "Valore" },
     { DatoA: "Valore", DatoB: "Valore" },
     { DatoA: "Valore", DatoB: "Valore", DatoC: "Valore" },
     { DatoA: "Valore", DatoAA: "ValoreAA", DatoBB: "ValoreBB" },
