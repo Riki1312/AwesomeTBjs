@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+        <title>Hello, world!</title>
+    </head>
+    <style>
+      td {
+        border: 1px solid #dee2e6 !important;
+        vertical-align: inherit !important;
+      }
+      th {
+        vertical-align: inherit !important;
+      }
+      .nopadding {
+        padding: 0 !important;
+      }
+      .noborder {
+        border: 0px !important;
+      }
+      .okpadding {
+        padding: .75rem;
+      }
+    </style>
+    <body>
+
+        <div id="app">
+            <h1>{{ colectionName }}</h1>
+
+            <!-- Test -->
+
+            <table v-if="ready" class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th v-for="property in mongodata.mainx" scope="col" class="pb-5">{{ property }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="i in mongodata.indexs">
+
+                    <th scope="row" class="pr-3">{{ i }}</th>
+                    <td v-if="Object.getOwnPropertyNames(mongodata.data[i]).slice(0,-1).filter((el) => !mongodata.currentx.includes(el)).length <= 0" v-for="key in mongodata.currentx">
+                      <div v-if="!methods.dataIsArray(mongodata.data[i][key])">{{ mongodata.data[i][key] }}</div>
+                      <div v-if="methods.dataIsArray(mongodata.data[i][key])">
+
+                        <table class="table">
+                          <tbody>
+                            <tr v-for="(val, ix) in mongodata.data[i][key]">
+                              <th scope="col" class="noborder nopadding">{{ ix }}</th>
+                              <td scope="row" class="noborder">{{ val }}</th>
+                            </tr>
+                          </tbody>
+                        </table>
+
+                      </div>
+                    </td>
+                    <td v-if="Object.getOwnPropertyNames(mongodata.data[i]).slice(0,-1).filter((el) => !mongodata.currentx.includes(el)).length > 0" v-for="key in methods.keyFilter(Object.getOwnPropertyNames(mongodata.data[i]).slice(0,-1), mongodata.currentx)" class="nopadding">
+                      <div v-if="mongodata.data[i][key]" class="okpadding">{{ mongodata.data[i][key] }}</div>
+                      <div v-if="!mongodata.data[i][key]">
+                        
+                        <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">{{ methods.fillSpace(i, mongodata.data[i], mongodata.currentx) }}</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td scope="row" class="noborder">{{ mongodata.data[i][methods.fillSpace(i, mongodata.data[i], mongodata.currentx, true)] }}</th>
+                              </tr>
+                            </tbody>
+                        </table>
+
+                      </div>
+                    </td>
+                    <td v-for="x in methods.getMoredatax(i, mongodata.data[i], mongodata.currentx)" class="nopadding">
+                        <table class="table">
+                            <thead v-if="!methods.dataCompare(Object.getOwnPropertyNames(mongodata.data[i]).slice(0,-1).filter((el) => !mongodata.currentx.includes(el)), Object.getOwnPropertyNames(mongodata.data[i - 1]).slice(0,-1).filter((el) => !mongodata.currentx.includes(el)), Object.getOwnPropertyNames(mongodata.data[i]).slice(0,-1))">
+                              <tr>
+                                <th scope="col" v-bind:class="{ 'pb-5': methods.arrayCompare(Object.getOwnPropertyNames(mongodata.data[i]).slice(0,-1).filter((el) => !mongodata.currentx.includes(el)), Object.getOwnPropertyNames(mongodata.data[i + 1]).slice(0,-1).filter((el) => !mongodata.currentx.includes(el))) }">{{ x }}</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td scope="row" class="noborder">{{ mongodata.data[i][x] }}</th>
+                              </tr>
+                            </tbody>
+                        </table>
+                    </td>
+
+                  </tr>
+                </tbody>
+            </table>
+
+            <!-- Test -->
+
+        </div>
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="index.js"></script>
+    </body>
+</html>

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+        <title>Hello, world!</title>
+    </head>
+    <style>
+      td {
+        border: 1px solid #dee2e6 !important;
+        vertical-align: inherit !important;
+      }
+      th {
+        vertical-align: inherit !important;
+      }
+      .nopadding {
+        padding: 0 !important;
+      }
+      .noborder {
+        border: 0px !important;
+      }
+      .okpadding {
+        padding: .75rem;
+      }
+    </style>
+    <body>
+
+        <div id="app">
+            <h1>{{ colectionName }}</h1>
+
+            <!-- Test -->
+
+            <table v-if="ready" class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th v-for="xline in mongodata.mainx" scope="col" class="pb-5">{{ xline }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="yline in mongodata.mainy">
+
+                    <th scope="row" class="pr-2">{{ yline }}</th>
+
+                    <!-- x in yline == mainx
+                    <td v-if="methods.x_matchMain(yline)" v-for="xline_ in methods.x_scroll(yline)">
+
+                      <!-- el is not array
+                      <div v-if="!methods.el_isArray(yline, xline_)">{{ xline_ }} : {{ mongodata.data[yline][xline_] }}</div>
+                      <!-- el is array
+                      <div v-if="methods.el_isArray(yline, xline_)">
+                        <table class="table">
+                          <tbody>
+                            <tr v-for="(el, i) in mongodata.data[yline][xline_]">
+                              <th scope="col" class="noborder nopadding">{{ i }}</th>
+                              <td scope="row" class="noborder">{{ el }}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+
+                    </td> -->
+
+                    <!-- x in yline != mainx -->
+                    <td v-for="ret in methods.xy_scrollNoMatch(yline)">
+                      
+                      <table class="table">
+                        <thead v-if="yline > 0 && !methods.x_containsInY(ret.xline, yline - 1)"> <!-- || (yline.length + 1 < mongodata.mainy.length && !methods.x_containsInY(ret.xline, yline + 1))-->
+                          <tr>
+                            <th scope="col">{{ ret.xline }}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td scope="row" class="noborder nopadding">
+
+                              <!-- el is not array -->
+                              <div v-if="!methods.vl_isArray(ret.el)">{{ ret.xline }} : {{ ret.el }}</div>
+                              <!-- el is array -->
+                              <div v-if="methods.vl_isArray(ret.el)">
+                                <table class="table">
+                                  <tbody>
+                                    <tr v-for="(el, i) in ret.el">
+                                      <th scope="col" class="noborder nopadding">{{ i }}</th>
+                                      <td scope="row" class="noborder">{{ el }}</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                    </td>
+
+                  </tr>
+                </tbody>
+            </table>
+
+            <!-- Test -->
+
+        </div>
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="index.js"></script>
+    </body>
+</html>
