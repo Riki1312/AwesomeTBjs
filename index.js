@@ -41,9 +41,13 @@ var app = new Vue({
 
                 app.mongodata.mainx.forEach((i) => {
                     if (app.mongodata.data[yline][i] === "") app.mongodata.data[yline][i] = "​\u200B";
-                    if (app.mongodata.data[yline][i]) ret.push({ el: app.mongodata.data[yline][i], xline: i });
+                    if (app.mongodata.data[yline][i]) {
+                        ret.push({ el: app.mongodata.data[yline][i], xline: i });
+                    }
                     else {
                         let xline_ = xlineNoMatch.pop();
+
+                        if (app.mongodata.data[yline][xline_] === "") app.mongodata.data[yline][xline_] = "​\u200B";
                         ret.push({ el: app.mongodata.data[yline][xline_], xline: xline_ });
                     }
                 });
