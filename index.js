@@ -48,6 +48,7 @@ var app = new Vue({
                     }
                 });
                 xlineNoMatch.forEach((j) => {
+                    if (app.mongodata.data[yline][j] === "") app.mongodata.data[yline][j] = "​\u200B";
                     ret.push({ el: app.mongodata.data[yline][j], xline: j });
                 });
 
