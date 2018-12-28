@@ -83,7 +83,10 @@
                                   <tbody>
                                     <tr v-for="(el, i) in ret.el">
                                       <th scope="col" class="noborder">{{ i }}</th>
-                                      <td scope="row" class="noborder">{{ el }}</td>
+                                      <td scope="row" class="noborder">
+                                          <div v-if="!mode.edit">{{ el }}</div>
+                                          <input v-model="mongodata.data[yline][ret.xline][i]" v-on:keydown="line_edit(yline, ret.xline)" v-if="mode.edit" class="form-control">
+                                      </td>
                                     </tr>
                                   </tbody>
                                 </table>
