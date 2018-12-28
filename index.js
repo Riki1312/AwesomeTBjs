@@ -9,6 +9,10 @@ var app = new Vue({
             mainy: [],
             collectionName: "Collection"
         },
+        mode: {
+            edit: false,
+            debug: false
+        },
         methods: {
             x_scroll: function(yline) {
                 return Object.getOwnPropertyNames(app.mongodata.data[yline]).slice(0,-1);
@@ -31,6 +35,7 @@ var app = new Vue({
                 let xlineNoMatch = app.methods.x_scroll(yline).filter((el) => !app.mongodata.mainx.includes(el));
 
                 app.mongodata.mainx.forEach((i) => {
+                    if (app.mongodata.data[yline][i] === "") app.mongodata.data[yline][i] = "​\u200B";
                     if (app.mongodata.data[yline][i]) ret.push({ el: app.mongodata.data[yline][i], xline: i });
                     else {
                         let xline_ = xlineNoMatch.pop();
@@ -96,6 +101,8 @@ let PureData = [
 app.mongodata.data = PureData;
 app.mongodata.mainx = [ "DatoA", "DatoB", "DatoC" ];
 app.mongodata.mainy = Array.apply(null, { length: PureData.length }).map(Number.call, Number);
+app.mode.edit = true;
+//app.mode.debug = true;
 app.ready = true;
 
 //

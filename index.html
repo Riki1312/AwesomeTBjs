@@ -66,7 +66,12 @@
                             <td scope="row" class="noborder nopadding">
 
                               <!-- el is not array -->
-                              <div v-if="!methods.vl_isArray(ret.el)" :class="{ okpadding: true, okmargin: (yline > 0 && !methods.x_containsInY(ret.xline, yline - 1)) }">{{ ret.el }}</div>
+                              <div v-if="!methods.vl_isArray(ret.el)" :class="{ okpadding: true, okmargin: (yline > 0 && !methods.x_containsInY(ret.xline, yline - 1)) }">
+                                <div v-if="!mode.edit">{{ ret.el }}</div>
+                                <input v-model="mongodata.data[yline][ret.xline]" v-if="mode.edit" class="form-control">
+
+                                <div v-if="mode.debug">(y:{{ yline }} x:{{ ret.xline }})</div>
+                              </div>
                               <!-- el is array -->
                               <div v-if="methods.vl_isArray(ret.el)">
                                 <table class="table">
